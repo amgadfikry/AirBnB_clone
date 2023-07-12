@@ -3,6 +3,7 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -12,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb)"
-    classes = ["BaseModel"]
+    classes = ["BaseModel", "User"]
 
     @staticmethod
     def check_instance(self, arg):
@@ -63,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """create new instance of model, save to json file, print the id of it
         using -> create [model name]
-        model names -> [BaseModel]"""
+        model names -> [BaseModel, User]"""
         if not arg:
             print("** class name missing **")
         elif arg not in self.classes:
@@ -76,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """print all string representation of specific model or all models
         using -> all or all [model name]
-        models names -> [BaseModel]"""
+        models names -> [BaseModel, User]"""
         if arg and arg not in self.classes:
             print("** class doesn't exist **")
         else:
@@ -97,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """print string representation of instance based on class name and id
         using -> show [class name] [id]
-        class names -> [BaseModel]"""
+        class names -> [BaseModel, User]"""
         obj = self.check_instance(self, arg)
         if obj:
             all_obj = storage.all()
@@ -107,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         """delete instance based on class name and id and save to json file
         using -> destroy [class name] [id]
-        class names -> [BaseModel]"""
+        class names -> [BaseModel, User]"""
         obj = self.check_instance(self, arg)
         if obj:
             all_obj = storage.all()
@@ -117,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """update or add only one atrribute for instance based on name & id
         using -> update [class name] [id] [attr name] [attr value]
-        class names -> [BaseModel]
+        class names -> [BaseModel, User]
         unchanged attr -> [id, created_at, updated_at]"""
         obj = self.check_instance(self, arg)
         args = arg.split(" ")
