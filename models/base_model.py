@@ -2,7 +2,7 @@
 """ base class module that all classes inherit from it """
 import uuid
 import datetime
-import json
+from . import storage
 
 
 class BaseModel:
@@ -32,6 +32,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
+            storage.new(self.to_dict())
 
     def __str__(self):
         """ magic method that print string that represent of class """
@@ -42,6 +43,8 @@ class BaseModel:
             updated_at attributes
         """
         self.updated_at = datetime.datetime.now()
+        storage.new(self.to_dict())
+        storage.save()
 
     def to_dict(self):
         """ public instance method that return dictionary contain
