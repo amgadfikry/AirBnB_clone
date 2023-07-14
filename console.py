@@ -140,17 +140,21 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
                 return
             else:
-                all_obj = storage.all()
-                cls = self.class_from_str(obj, **all_obj[obj])
-                Class = globals()[args[0]]
-                if type(getattr(Class, args[2])) is int:
-                    x = int(args[3])
-                elif type(getattr(Class, args[2])) is float:
-                    x = float(args[3])
-                else:
-                    x = args[3]
-                setattr(cls, args[2], x)
-                cls.save()
+                try:
+                    all_obj = storage.all()
+                    cls = self.class_from_str(obj, **all_obj[obj])
+                    Class = globals()[args[0]]
+                    t = args[2]
+                    if hasattr(Class, t) and type(getattr(Class, t)) is int:
+                        x = int(args[3])
+                    elif hasattr(Class, t) and type(getattr(Class, t)) is float:
+                        x = float(args[3])
+                    else:
+                        x = args[3]
+                    setattr(cls, t, x)
+                    cls.save()
+                except ValueError:
+                    pass
 
     def do_EOF(self, arg):
         """EOF handle exit program with 'ctrl + z' or 'ctrl + d'"""
