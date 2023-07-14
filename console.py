@@ -4,6 +4,11 @@ import cmd
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -13,7 +18,8 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb)"
-    classes = ["BaseModel", "User"]
+    classes = ["BaseModel", "User", "State",
+               "City", "Amenity", "Place", "Review"]
 
     @staticmethod
     def check_instance(self, arg):
@@ -64,7 +70,8 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """create new instance of model, save to json file, print the id of it
         using -> create [model name]
-        model names -> [BaseModel, User]"""
+        model names -> [BaseModel, User, State, City, Amenity, Place, Review]
+        """
         if not arg:
             print("** class name missing **")
         elif arg not in self.classes:
@@ -77,7 +84,8 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """print all string representation of specific model or all models
         using -> all or all [model name]
-        models names -> [BaseModel, User]"""
+        model names -> [BaseModel, User, State, City, Amenity, Place, Review]
+        """
         if arg and arg not in self.classes:
             print("** class doesn't exist **")
         else:
@@ -98,7 +106,8 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """print string representation of instance based on class name and id
         using -> show [class name] [id]
-        class names -> [BaseModel, User]"""
+        model names -> [BaseModel, User, State, City, Amenity, Place, Review]
+        """
         obj = self.check_instance(self, arg)
         if obj:
             all_obj = storage.all()
@@ -108,7 +117,8 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         """delete instance based on class name and id and save to json file
         using -> destroy [class name] [id]
-        class names -> [BaseModel, User]"""
+        model names -> [BaseModel, User, State, City, Amenity, Place, Review]
+        """
         obj = self.check_instance(self, arg)
         if obj:
             all_obj = storage.all()
@@ -118,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """update or add only one atrribute for instance based on name & id
         using -> update [class name] [id] [attr name] [attr value]
-        class names -> [BaseModel, User]
+        model names -> [BaseModel, User, State, City, Amenity, Place, Review]
         unchanged attr -> [id, created_at, updated_at]"""
         obj = self.check_instance(self, arg)
         args = arg.split(" ")
@@ -132,7 +142,14 @@ class HBNBCommand(cmd.Cmd):
             else:
                 all_obj = storage.all()
                 cls = self.class_from_str(obj, **all_obj[obj])
-                setattr(cls, args[2], args[3])
+                Class = globals()[args[0]]
+                if type(getattr(Class, args[2])) is int:
+                    x = int(args[3])
+                elif type(getattr(Class, args[2])) is float:
+                    x = float(args[3])
+                else:
+                    x = args[3]
+                setattr(cls, args[2], x)
                 cls.save()
 
     def do_EOF(self, arg):
