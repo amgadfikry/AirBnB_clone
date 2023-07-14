@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-import json
 """ module that steralize and desteralize of instance to json
-    and to object
-"""
+    and to object """
+import json
 
 
 class FileStorage:
