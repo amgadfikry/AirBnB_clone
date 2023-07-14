@@ -143,11 +143,11 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     all_obj = storage.all()
                     cls = self.class_from_str(obj, **all_obj[obj])
-                    Class = globals()[args[0]]
+                    Clas = globals()[args[0]]
                     t = args[2]
-                    if hasattr(Class, t) and type(getattr(Class, t)) is int:
+                    if hasattr(Clas, t) and type(getattr(Clas, t)) is int:
                         x = int(args[3])
-                    elif hasattr(Class, t) and type(getattr(Class, t)) is float:
+                    elif hasattr(Clas, t) and type(getattr(Clas, t)) is float:
                         x = float(args[3])
                     else:
                         x = args[3]
