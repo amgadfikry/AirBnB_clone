@@ -35,7 +35,7 @@ class FileStorage:
             Parameters:
                 obj: dictionary of new class
         """
-        FileStorage.__objects[f"{dic['__class__']}.{dic['id']}"] = obj
+        FileStorage.__objects[f"{obj['__class__']}.{obj['id']}"] = obj
 
     def save(self):
         """ method that steralize __objects attr to json and save it to
