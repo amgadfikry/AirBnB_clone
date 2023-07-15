@@ -108,6 +108,7 @@ class TestBaseModel(unittest.TestCase):
         """ method that test create instance from object you created before """
         self.one.save()
         dict_one = self.one.to_dict()
+        self.assertEqual(type(dict_one["created_at"]), str)
         new = BaseModel(**dict_one)
         self.assertEqual(self.one.id, new.id)
         self.assertEqual(self.one.name, new.name)
