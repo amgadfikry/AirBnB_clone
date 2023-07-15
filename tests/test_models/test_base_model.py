@@ -59,6 +59,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.one, "created_at"))
         self.assertTrue(hasattr(self.one, "updated_at"))
         self.assertTrue(hasattr(self.one, "save"))
+        self.assertTrue(hasattr(self.one, "__init__"))
         self.assertTrue(hasattr(self.one, "__str__"))
         self.assertTrue(hasattr(self.one, "to_dict"))
 
