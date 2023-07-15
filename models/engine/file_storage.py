@@ -35,17 +35,12 @@ class FileStorage:
             Parameters:
                 obj: dictionary of new class
         """
-        if obj:
-            dic = obj.to_dict()
-            FileStorage.__objects[f"{dic['__class__']}.{dic['id']}"] = obj
+        FileStorage.__objects[f"{dic['__class__']}.{dic['id']}"] = obj
 
     def save(self):
         """ method that steralize __objects attr to json and save it to
             file in _file_path
         """
-        dic = {}
-        for key, value in FileStorage.__objects.items():
-            FileStorage.__objects[key] = value.to_dict()
         with open(FileStorage.__file_path, "w", encoding="utf_8") as fi:
             fi.write(json.dumps(FileStorage.__objects))
 
@@ -57,8 +52,5 @@ class FileStorage:
             with open(FileStorage.__file_path, "r", encoding="utf_8") as fi:
                 reading = fi.read()
                 FileStorage.__objects = json.loads(reading)
-            for key, value in FileStorage.__objects.items():
-                x = globals()[key.split(".")[0]]
-                FileStorage.__objects[key] = x(**value)
         except FileNotFoundError:
             pass

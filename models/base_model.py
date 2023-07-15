@@ -32,7 +32,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
-            models.storage.new(self)
+            models.storage.new(self.to_dict())
 
     def __str__(self):
         """ magic method that print string that represent of class """
@@ -43,6 +43,7 @@ class BaseModel:
             updated_at attributes
         """
         self.updated_at = datetime.datetime.now()
+        models.storage.new(self.to_dict())
         models.storage.save()
 
     def to_dict(self):
