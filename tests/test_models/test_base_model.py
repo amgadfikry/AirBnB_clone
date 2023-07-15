@@ -53,6 +53,20 @@ class TestBaseModel(unittest.TestCase):
         doc = len(BaseModel.to_dict.__doc__.strip())
         self.assertTrue(doc > 0)
 
+    def test_has_attributes(self):
+        """ method test if attributes is present or not """
+        self.assertTrue(hasattr(self.one, "id"))
+        self.assertTrue(hasattr(self.one, "created_at"))
+        self.assertTrue(hasattr(self.one, "updated_at"))
+        self.assertTrue(hasattr(self.one, "save"))
+        self.assertTrue(hasattr(self.one, "__str__"))
+        self.assertTrue(hasattr(self.one, "to_dict"))
+
+    def test_date(self):
+        "method test dates diffrernt after use save method """
+        self.one.save()
+        self.assertNotEqual(self.one.created_at, self.one.updated_at)
+
     def test_intsance(self):
         """ method that test if is instance of basemodel """
         self.assertIsInstance(self.one, BaseModel)
