@@ -6,5 +6,5 @@ This project is Command-Line Interpreter for AirBnB Clone.
 
 To start up the interactive Mode Run this command
 ```c
-./console.py
+$ ./console.py
 ```
