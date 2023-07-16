@@ -15,15 +15,15 @@ $ ./console.py
 +----------+--------------------------------------------------------------+---------------------------+
 |Command   |  Syntax                                                      | Description               |
 +----------+--------------------------------------------------------------+---------------------------+
-|create    | create (className)                                           | create an object          |
+|create    | create (ClassName)                                           | create an object          |
 +----------+--------------------------------------------------------------+---------------------------+
-|show      | show (className) [id]                                        | shows object of class     |
+|show      | show (ClassName) [id]                                        | shows object of class     |
 +----------+--------------------------------------------------------------+---------------------------+
-|destroy   | destroy (className) (id)                                     | destroys object of class  |                 
+|destroy   | destroy (ClassName) (id)                                     | destroys object of class  |                 
 +----------+--------------------------------------------------------------+---------------------------+
-|update    | update (className) (id) (attribute name) (attribute value)   | updates object attributes |
+|update    | update (ClassName) (id) (attribute name) (attribute value)   | updates object attributes |
 +----------+--------------------------------------------------------------+---------------------------+
-|all       | all OR all (className)                                       | prints all objects        |
+|all       | all OR all (ClassName)                                       | prints all objects        |
 +----------+--------------------------------------------------------------+---------------------------+
 |help      | help (command)                                               | to get help about commands|                    
 +----------+--------------------------------------------------------------+---------------------------+
