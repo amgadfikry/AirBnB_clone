@@ -2,6 +2,7 @@
 """ entry point module to AirBnB project """
 import cmd
 import models
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -30,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return False
             elif len(args) == 1:
-                print("** instance id is missing **")
+                print("** instance id missing **")
                 return False
             else:
                 all_obj = models.storage.all()
@@ -125,6 +126,87 @@ class HBNBCommand(cmd.Cmd):
                     obj.save()
                 except ValueError:
                     pass
+
+    @staticmethod
+    def count(cls):
+        """ static method that calculate number of specific instance
+            Parameters:
+                cls: model or class want to count
+        """
+        all_obj = models.storage.all()
+        count = 0
+        if cls not in models.classes.keys():
+            print("** class doesn't exist **")
+            return
+        for key in all_obj.keys():
+            if key.split(".")[0] == cls:
+                count += 1
+        print(count)
+
+    @staticmethod
+    def split_line(line):
+        """ static method that split line use regex to extract string
+            Parameter:
+                line: line of string to split it
+            Return:
+                list of args
+        """
+        cls = re.search(r"^\w+", line)
+        command = re.search(r"(?<=\.)\w+", line)
+        para = re.search(r"\(.*\)", line)
+        if cls and command and para:
+            cls = cls.group()
+            command = command.group()
+            para = para.group()
+        else:
+            return False
+        li = [command, cls]
+        if len(para) > 2:
+            para_li = eval(para)
+            if isinstance(para_li, tuple):
+                for i in para_li:
+                    li.append(i)
+            else:
+                li.append(para_li)
+        if len(li) > 3 and isinstance(li[3], dict):
+            return [li[0], f"{li[1]} {li[2]}", li[3]]
+        else:
+            return [li[0], ' '.join(li[1:])]
+
+    commands = ["all", "show", "destroy", "count", "update"]
+
+    def default(self, line):
+        """ method that manage all default command than it present
+            Parameters:
+                line: line of all command and args
+        """
+        command = self.split_line(line)
+        if command and command[0] in self.commands:
+            if command[0] == "all":
+                self.do_all(command[1])
+            elif command[0] == "show":
+                self.do_show(command[1])
+            elif command[0] == "count":
+                self.count(command[1])
+            elif command[0] == "destroy":
+                self.do_destroy(command[1])
+            elif command[0] == "update":
+                if len(command) > 2 and isinstance(command[2], dict):
+                    self.update_multi(self, command[1], command[2])
+                else:
+                    self.do_update(command[1])
+        else:
+            print(f"*** unknown syntax {line}")
+
+    @staticmethod
+    def update_multi(self, arg, dic):
+        """ update same class with multiple atributes
+            Parameters:
+                arg: name of class and id
+                dic: dic of attributes name and values
+        """
+        for key, value in dic.items():
+            self.do_update(f"{arg} {key} {value}")
 
     def do_EOF(self, arg):
         """EOF handle exit program with 'ctrl + z' or 'ctrl + d'"""
