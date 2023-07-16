@@ -1,2 +1,2 @@
 #!/usr/bin/python3
-""" empty module th start package """
+""" empty module that start package """
