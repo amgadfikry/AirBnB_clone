@@ -5,6 +5,7 @@ import datetime
 from models.base_model import BaseModel
 import models.base_model
 import pep8
+import os
 
 
 class TestBaseModel(unittest.TestCase):
@@ -23,13 +24,17 @@ class TestBaseModel(unittest.TestCase):
         """ method that start with end of each test """
         del self.one
         del self.two
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
 
     def test_style(self):
         """method test style of module file"""
         style = pep8.StyleGuide()
         result = style.check_files(['models/base_model.py'])
         errors = result.total_errors
-        self.assertEqual(errors, 0)
+        self.assertEqual(errors, 0, "fix pep8")
 
     def test_doc_module(self):
         """ method test if there doc for module """
@@ -70,6 +75,17 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.one, "__init__"))
         self.assertTrue(hasattr(self.one, "__str__"))
         self.assertTrue(hasattr(self.one, "to_dict"))
+
+    def test_instance_date(self):
+        """test instance of created and updated"""
+        self.assertTrue(isinstance(self.one.created_at, datetime.datetime))
+        self.assertTrue(isinstance(self.one.updated_at, datetime.datetime))
+
+    def test_type_of_attr(self):
+        """ method test types of attr"""
+        self.assertEqual(type(self.one.id), str)
+        self.assertEqual(type(self.one.created_at), datetime.datetime)
+        self.assertEqual(type(self.one.updated_at), datetime.datetime)
 
     def test_date(self):
         "method test dates diffrernt after use save method """
@@ -117,12 +133,13 @@ class TestBaseModel(unittest.TestCase):
         self.one.save()
         dict_one = self.one.to_dict()
         self.assertEqual(type(dict_one["created_at"]), str)
+        self.assertEqual(type(dict_one["updated_at"]), str)
         new = BaseModel(**dict_one)
         self.assertEqual(self.one.id, new.id)
         self.assertEqual(self.one.name, new.name)
         self.assertIsNot(self.one, new)
-        type_str = str(type(new.created_at))
-        self.assertEqual(type_str, "<class 'datetime.datetime'>")
+        self.assertEqual(type(new.created_at), datetime.datetime)
+        self.assertEqual(type(new.updated_at), datetime.datetime)
         self.assertEqual(self.one.created_at, new.created_at)
         self.assertEqual(self.one.updated_at, new.updated_at)
         self.assertEqual(new.to_dict(), dict_one)
