@@ -54,7 +54,7 @@ class TestFileStorage(unittest.TestCase):
         """ check save of 'new' instance of base model """
         all_obj = storage.all()
         new_obj = all_obj[f"BaseModel.{self.new.id}"]
-        self.assertEqual(new_obj, self.new.to_dict())
+        self.assertEqual(new_obj, self.new)
 
     def test_update_instance_save(self):
         """ method test update instance and save it """
@@ -63,16 +63,16 @@ class TestFileStorage(unittest.TestCase):
         self.new.save()
         all_obj = storage.all()
         new_obj = all_obj[f"BaseModel.{self.new.id}"]
-        self.assertEqual(new_obj, self.new.to_dict())
+        self.assertEqual(new_obj, self.new)
 
     def test_new_instance(self):
         """ check new instance in storage """
         new2 = BaseModel()
         all_obj = storage.all()
         new_obj = all_obj[f"BaseModel.{self.new.id}"]
-        self.assertEqual(new_obj, self.new.to_dict())
+        self.assertEqual(new_obj, self.new)
         new_obj = all_obj[f"BaseModel.{new2.id}"]
-        self.assertEqual(new_obj, new2.to_dict())
+        self.assertEqual(new_obj, new2)
 
 
 if __name__ == '__main__':
