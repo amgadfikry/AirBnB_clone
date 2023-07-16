@@ -1,6 +1,6 @@
 # AirBnB Clone
 
-This project is Command-Line Interpreter for AirBnB Clone.
+This project is a Command-Line Interpreter for AirBnB Clone.
 
 ## Usage
 
