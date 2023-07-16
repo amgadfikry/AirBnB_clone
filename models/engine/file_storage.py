@@ -9,8 +9,8 @@ class FileStorage:
     """ class of file storage that convert object to json
         and convert json to object
         Class Attr:
-            file_path: privte attribute to path of json file
-            objects: private attribute to stored objects where keys
+                file_path: privte attribute to path of json file
+                objects: private attribute to stored objects where keys
                 are name of class.id of class
     """
     __file_path = "file.json"
@@ -26,7 +26,7 @@ class FileStorage:
     def new(self, obj):
         """ set a new object to __objects class attribute
             Parameters:
-                obj: dictionary of new class
+                    obj: dictionary of new class
         """
         FileStorage.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
