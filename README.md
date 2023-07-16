@@ -33,3 +33,4 @@ $ ./console.py
 ```
 ## Contributors
 * [Amgad Fikry](https://github.com/amgadfikry/printf)
+* [Abubakr Ali](https://github.com/abubakrali10)
