@@ -26,7 +26,7 @@ $ ./console.py
 |update    | update <ClassName> <id> <attribute name> <attribute value>    | updates object attributes |
 |          | <class name>.update(<id>, <attribute name>, <attribute value>)|                           |
 +----------+---------------------------------------------------------------+---------------------------+
-|all       | all OR all <ClassName>                                        | prints all objects        |
+|all       | all OR all <ClassName>                                        | prints all instances      |
 +----------+---------------------------------------------------------------+---------------------------+
 |help      | help <command>                                                | to get help about commands|                    
 +----------+---------------------------------------------------------------+---------------------------+
