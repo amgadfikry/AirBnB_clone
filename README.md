@@ -15,16 +15,16 @@ $ ./console.py
 +----------+--------------------------------------------------------------+---------------------------+
 |Command   |  Syntax                                                      | Description               |
 +----------+--------------------------------------------------------------+---------------------------+
-|create    | create (ClassName)                                           | create an object          |
+|create    | create <ClassName>                                           | create an object          |
 +----------+--------------------------------------------------------------+---------------------------+
-|show      | show (ClassName) [id]                                        | shows object of class     |
+|show      | show <ClassName> <id>                                        | shows object of class     |
 +----------+--------------------------------------------------------------+---------------------------+
-|destroy   | destroy (ClassName) (id)                                     | destroys object of class  |                 
+|destroy   | destroy <ClassName> <id>                                     | destroys object of class  |                 
 +----------+--------------------------------------------------------------+---------------------------+
-|update    | update (ClassName) (id) (attribute name) (attribute value)   | updates object attributes |
+|update    | update <ClassName> <id> <attribute name> <attribute value>   | updates object attributes |
 +----------+--------------------------------------------------------------+---------------------------+
-|all       | all OR all (ClassName)                                       | prints all objects        |
+|all       | all OR all <ClassName>                                       | prints all objects        |
 +----------+--------------------------------------------------------------+---------------------------+
-|help      | help (command)                                               | to get help about commands|                    
+|help      | help <command>                                               | to get help about commands|                    
 +----------+--------------------------------------------------------------+---------------------------+
 ```
