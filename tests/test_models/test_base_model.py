@@ -4,6 +4,7 @@ import unittest
 import datetime
 from models.base_model import BaseModel
 import models.base_model
+import pep8
 
 
 class TestBaseModel(unittest.TestCase):
@@ -22,6 +23,13 @@ class TestBaseModel(unittest.TestCase):
         """ method that start with end of each test """
         del self.one
         del self.two
+
+    def test_style(self):
+        """method test style of module file"""
+        style = pep8.StyleGuide()
+        result = style.check_files(['models/base_model.py'])
+        errors = result.total_errors
+        self.assertEqual(errors, 0)
 
     def test_doc_module(self):
         """ method test if there doc for module """
