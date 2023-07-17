@@ -52,5 +52,33 @@ class TestConsole(unittest.TestCase):
         obj = models.storage.all()
         self.assertEqual(text, obj[f"User.{self.user_one}"].__str__())
 
+    def test_all(self):
+        """test all command"""
+        text = self.res("all Mymodel")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("all")
+        obj = models.storage.all()
+        self.assertEqual(text, str([obj[f"User.{self.user_one}"].__str__()]))
+        text = self.res("all User")
+        self.assertEqual(text, str([obj[f"User.{self.user_one}"].__str__()]))
+        text = self.res("all Place")
+        self.assertTrue(len(text) == 0)
+
+    def test_destroy(self):
+        """test destroy command"""
+        text = self.res("destroy")
+        self.assertEqual(text, "** class name missing **")
+        text = self.res("destroy hhhh")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("destroy User")
+        self.assertEqual(text, "** instance id missing **")
+        text = self.res("destroy User 77777")
+        self.assertEqual(text, "** no instance found **")
+        text = self.res(f"destroy User {self.user_one}")
+        self.assertEqual(len(text), 0)
+        text = self.res(f"show User {self.user_one}")
+        self.assertEqual(text, "** no instance found **")
+
+
 if __name__ == '__main__':
     unittest.main()
