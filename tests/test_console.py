@@ -113,6 +113,13 @@ class TestConsole(unittest.TestCase):
         obj = models.storage.all()
         self.assertEqual(text, obj[f"User.{self.user_one}"].__str__())
 
+    def test_class_show(self):
+        """test class.show command"""
+        text = self.res("hhh.show()")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("User.show()")
+        self.assertEqual(text, "** instance id missing **")
+
     def test_all(self):
         """test all command"""
         text = self.res("all Mymodel")
@@ -123,6 +130,13 @@ class TestConsole(unittest.TestCase):
         text = self.res("all User")
         self.assertEqual(text, str([obj[f"User.{self.user_one}"].__str__()]))
         text = self.res("all Place")
+        self.assertTrue(len(text) == 0)
+
+    def test_class_all(self):
+        """test class.all command"""
+        text = self.res("Us.all()")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("Place.all()")
         self.assertTrue(len(text) == 0)
 
     def test_destroy(self):
@@ -139,6 +153,79 @@ class TestConsole(unittest.TestCase):
         self.assertEqual(len(text), 0)
         text = self.res(f"show User {self.user_one}")
         self.assertEqual(text, "** no instance found **")
+
+    def test_class_destroy(self):
+        """test class.destroy command"""
+        text = self.res("hhh.destroy()")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("User.destroy()")
+        self.assertEqual(text, "** instance id missing **")
+
+    def test_count(self):
+        """test count command"""
+        text = self.res("hh.count()")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("User.count()")
+        self.assertTrue(int(text) > 0)
+
+    def test_help(self):
+        """test help command"""
+        text = self.res("help help")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help create")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help show")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help all")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help destroy")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help update")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help quit")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help EOF")
+        self.assertTrue(len(text) > 0)
+        text = self.res("help dd")
+        self.assertEqual(text, "*** No help on dd")
+
+    def test_quit(self):
+        """test quit command """
+        text = self.res("quit")
+        self.assertTrue(len(text) == 0)
+
+    def test_update(self):
+        """test update command """
+        text = self.res("update")
+        self.assertEqual(text, "** class name missing **")
+        text = self.res("update hhh")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("update User")
+        self.assertEqual(text, "** instance id missing **")
+        text = self.res("update User 77777")
+        self.assertEqual(text, "** no instance found **")
+        text = self.res(f"update User {self.user_one}")
+        self.assertEqual(text, "** attribute name missing **")
+        text = self.res(f"update User {self.user_one} amgad")
+        self.assertEqual(text, "** value missing **")
+        text = self.res(f"update User {self.user_one} name amgad")
+        self.assertEqual(len(text), 0)
+        obj = models.storage.all()
+        text = self.res(f"show User {self.user_one}")
+        self.assertEqual(text, obj[f"User.{self.user_one}"].__str__())
+        self.assertEqual(obj[f"User.{self.user_one}"].name, "amgad")
+
+    def test_class_update(self):
+        """test class.update"""
+        text = self.res("hhh.update()")
+        self.assertEqual(text, "** class doesn't exist **")
+        text = self.res("User.update()")
+        self.assertEqual(text, "** instance id missing **")
+
+    def test_error_code(self):
+        """test unknown command"""
+        text = self.res("wrong")
+        self.assertEqual(text, "*** unknown syntax wrong")
 
 
 if __name__ == '__main__':
