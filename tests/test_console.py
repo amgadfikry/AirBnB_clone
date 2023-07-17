@@ -6,6 +6,8 @@ from unittest.mock import patch
 from console import HBNBCommand as hbnb
 import os
 import models
+import console
+import cmd
 
 
 class TestConsole(unittest.TestCase):
@@ -28,6 +30,65 @@ class TestConsole(unittest.TestCase):
             os.remove("file.json")
         except FileNotFoundError:
             pass
+
+    def test_doc(self):
+        """test doc of file"""
+        text = len(console.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.check_instance.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.do_create.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.do_all.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.do_show.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.do_destroy.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.do_update.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.count.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.split_line.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.default.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.update_multi.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.do_EOF.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.do_quit.__doc__.strip())
+        self.assertTrue(text > 0)
+        text = len(hbnb.emptyline.__doc__.strip())
+        self.assertTrue(text > 0)
+
+    def test_has_attr(self):
+        """check if has attr or not"""
+        self.assertTrue(hasattr(hbnb, "prompt"))
+        self.assertTrue(hasattr(hbnb, "emptyline"))
+        self.assertTrue(hasattr(hbnb, "do_quit"))
+        self.assertTrue(hasattr(hbnb, "do_EOF"))
+        self.assertTrue(hasattr(hbnb, "default"))
+        self.assertTrue(hasattr(hbnb, "do_destroy"))
+        self.assertTrue(hasattr(hbnb, "count"))
+        self.assertTrue(hasattr(hbnb, "split_line"))
+        self.assertTrue(hasattr(hbnb, "update_multi"))
+        self.assertTrue(hasattr(hbnb, "do_all"))
+        self.assertTrue(hasattr(hbnb, "do_show"))
+        self.assertTrue(hasattr(hbnb, "do_update"))
+        self.assertTrue(hasattr(hbnb, "check_instance"))
+        self.assertTrue(hasattr(hbnb, "do_create"))
+
+    def test_prompt_value(self):
+        """check prompt value"""
+        self.assertEqual(hbnb.prompt, "(hbnb) ")
+
+    def test_instance(self):
+        """check instance of hbnb"""
+        x = hbnb()
+        self.assertTrue(isinstance(x, cmd.Cmd))
 
     def test_create(self):
         """test create command"""
